@@ -1,0 +1,41 @@
+name: UPM CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ "dev", "main", "hotfix" ]
+  pull_request:
+    branches: [ "dev", "main", "hotfix" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  split-upm:
+    name: split upm branch
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      # Runs a single command using the runners shell
+      - name: Split upm branch
+        run: |
+          git push origin --delete upm_${GITHUB_REF##*/} &> /dev/null || echo upm_${GITHUB_REF##*/} branch not found
+          git subtree split -P "$CORE_PKG_ROOT" -b upm_${GITHUB_REF##*/}
+          git push -u origin upm_${GITHUB_REF##*/}
+          git checkout upm_${GITHUB_REF##*/}
+          # git push https://lltxjenkins:${{secrets.ALIYUNPASSWORD}}@code.aliyun.com/upm/bugly.git -f
+          # npm publish . --access public
+        env:
+          CORE_PKG_ROOT: Assets/Package/com.bugly.unity
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -1,0 +1,17 @@
+{
+    "displayName": "Bugly Unity",
+    "category": "Unity",
+    "description": "Bugly Unity",
+    "keywords": [
+      "Didabu",
+      "unity",
+      "bugly"
+    ],
+    "dependencies": {
+      
+    },
+    "name": "com.bugly.unity",
+    "version": "0.1.0",
+    "type": "library",
+    "unity": "2019.3"
+  }
