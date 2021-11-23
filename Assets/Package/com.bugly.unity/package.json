@@ -3,7 +3,6 @@
     "category": "Unity",
     "description": "Bugly Unity",
     "keywords": [
-      "Didabu",
       "unity",
       "bugly"
     ],
@@ -11,7 +10,7 @@
       
     },
     "name": "com.bugly.unity",
-    "version": "0.1.0",
+    "version": "1.5.301",
     "type": "library",
     "unity": "2019.3"
   }

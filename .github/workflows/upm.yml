@@ -31,11 +31,19 @@ jobs:
       - name: Split upm branch
         run: |
           git push origin --delete upm_${GITHUB_REF##*/} &> /dev/null || echo upm_${GITHUB_REF##*/} branch not found
-          git subtree split -P "$CORE_PKG_ROOT" -b upm_${GITHUB_REF##*/}
+          git subtree split -P "$PKG_ROOT" -b upm_${GITHUB_REF##*/}
           git push -u origin upm_${GITHUB_REF##*/}
-          git checkout upm_${GITHUB_REF##*/}
+          # git checkout upm_${GITHUB_REF##*/}
           # git push https://lltxjenkins:${{secrets.ALIYUNPASSWORD}}@code.aliyun.com/upm/bugly.git -f
           # npm publish . --access public
         env:
-          CORE_PKG_ROOT: Assets/Package/com.bugly.unity
+          PKG_ROOT: Assets/Package/com.bugly.unity
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: npm publish
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git checkout upm_main
+          npm publish . --access public
+        env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
