@@ -1,0 +1,16 @@
+{
+    "displayName": "Bugly Unity",
+    "category": "Unity",
+    "description": "Bugly Unity",
+    "keywords": [
+      "unity",
+      "bugly"
+    ],
+    "dependencies": {
+      
+    },
+    "name": "com.bugly.unity",
+    "version": "1.5.303",
+    "type": "library",
+    "unity": "2019.3"
+  }
